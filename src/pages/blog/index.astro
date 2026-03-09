@@ -1,0 +1,92 @@
+---
+import { getCollection } from 'astro:content';
+import MainLayout from '../../layouts/MainLayout.astro';
+
+const posts = await getCollection('blog');
+const sortedPosts = posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const featuredPost = sortedPosts[0];
+const otherPosts = sortedPosts.slice(1);
+
+// DEBUG: Cek di terminal apakah URL gambarnya masuk
+// console.log(featuredPost.data.image);
+---
+
+<MainLayout title="Journal | Wanbe">
+  <header class="mb-16">
+    <span class="text-[10px] uppercase tracking-[0.5em] font-black text-gray-400 block mb-4 italic">The Archives</span>
+    <h1 class="text-6xl md:text-8xl font-black tracking-tighter uppercase italic leading-none">Journal<span class="text-gray-200">.</span></h1>
+  </header>
+
+  {featuredPost && (
+    <section class="mb-24 group">
+      <a href={`/blog/${featuredPost.slug}`} class="grid md:grid-cols-2 gap-10 items-center">
+        <div class="aspect-[16/10] bg-neutral-100 overflow-hidden relative">
+             {featuredPost.data.image ? (
+                <img 
+                    src={featuredPost.data.image} 
+                    alt={featuredPost.data.title}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 ease-out"
+                />
+             ) : (
+                <div class="w-full h-full flex items-center justify-center bg-neutral-200">
+                    <span class="text-[10px] uppercase tracking-[0.3em] font-black text-neutral-400 italic">No Visual Attached</span>
+                </div>
+             )}
+        </div>
+        
+        <div class="space-y-4">
+          <span class="text-[10px] uppercase tracking-widest font-black text-gray-400">
+            Featured — {featuredPost.data.category}
+          </span>
+          <h2 class="text-4xl md:text-5xl font-black tracking-tighter leading-[1.1] group-hover:text-gray-500 transition-colors">
+            {featuredPost.data.title}
+          </h2>
+          <p class="text-gray-600 text-lg leading-relaxed line-clamp-3 font-serif italic">
+            {featuredPost.data.description}
+          </p>
+          <div class="pt-4">
+            <span class="text-[11px] font-black uppercase tracking-widest border-b-2 border-black pb-1">
+              Dive Deeper →
+            </span>
+          </div>
+        </div>
+      </a>
+    </section>
+  )}
+
+  <hr class="border-gray-100 mb-20" />
+
+  <section class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-20">
+    {otherPosts.map(post => (
+      <article class="group">
+        <a href={`/blog/${post.slug}`} class="space-y-6">
+          <div class="aspect-video bg-neutral-100 overflow-hidden relative">
+             {post.data.image ? (
+                <img 
+                    src={post.data.image} 
+                    alt={post.data.title}
+                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-in-out"
+                />
+             ) : (
+                <div class="w-full h-full flex items-center justify-center bg-neutral-50 border border-gray-100">
+                    <h4 class="text-xl font-black tracking-tighter uppercase opacity-10">{post.data.title}</h4>
+                </div>
+             )}
+          </div>
+          <div class="space-y-3">
+            <span class="text-[10px] uppercase tracking-widest font-black text-gray-400">
+              {post.data.category} — {post.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+            </span>
+            <h3 class="text-2xl font-bold tracking-tighter leading-tight group-hover:text-gray-500 transition-colors">
+              {post.data.title}
+            </h3>
+            <p class="text-gray-500 line-clamp-2 text-sm leading-relaxed italic font-serif">
+              {post.data.description}
+            </p>
+          </div>
+        </a>
+      </article>
+    ))}
+  </section>
+</MainLayout>

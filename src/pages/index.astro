@@ -1,17 +1,86 @@
 ---
+import MainLayout from '../layouts/MainLayout.astro';
+import { getCollection } from 'astro:content';
 
+// Ambil 3 artikel terbaru
+const posts = await getCollection('blog');
+const latestPosts = posts
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<MainLayout title="Wanbe | Value, Not Stuff">
+  <section class="border-b border-gray-100">
+    <span class="text-[10px] uppercase tracking-[0.5em] font-black text-gray-400 block mb-6">
+      Est. 2026 — Bali, Indonesia
+    </span>
+    <h1 class="text-6xl md:text-8xl font-black tracking-tighter leading-[0.85] uppercase mb-10">
+      Less <br/>
+      <span class="text-gray-300 italic font-serif lowercase">but</span> <br/>
+      Better<span class="text-gray-200">.</span>
+    </h1>
+    <p class="text-xl md:text-2xl text-gray-500 max-w-xl leading-relaxed tracking-tight italic font-serif">
+      Building a healthy, functional, and meaningful living space through minimalist design curation.
+    </p>
+  </section>
+
+  <section class="py-24">
+    <div class="flex justify-between items-end mb-16">
+      <div>
+        <h2 class="text-[10px] uppercase tracking-[0.3em] font-black text-black">Latest Journal</h2>
+        <p class="text-sm text-gray-400 font-serif italic">Curated thoughts on living.</p>
+      </div>
+      <a href="/blog" class="text-[10px] font-black uppercase tracking-widest hover:text-gray-400 transition-colors border-b border-black pb-1">
+        View All Journal →
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8">
+      {latestPosts.map(post => (
+        <article class="group">
+          <a href={`/blog/${post.slug}`} class="block">
+            <div class="aspect-[4/5] bg-neutral-100 mb-6 overflow-hidden relative">
+               {post.data.image ? (
+                 <img 
+                    src={post.data.image} 
+                    alt={post.data.title}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 ease-out"
+                 />
+               ) : (
+                 <div class="w-full h-full flex items-center justify-center bg-neutral-200 text-[10px] uppercase tracking-widest text-gray-400 italic">
+                    No Visual Attached
+                 </div>
+               )}
+               <div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            </div>
+            
+            <div class="space-y-2">
+                <span class="text-[9px] uppercase tracking-[0.2em] font-black text-gray-400 block">
+                {post.data.category} — {post.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                </span>
+                <h3 class="text-xl font-bold leading-tight tracking-tighter group-hover:text-gray-500 transition-colors">
+                {post.data.title}
+                </h3>
+            </div>
+          </a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="bg-[#1a1a1a] text-white p-12 md:p-24 rounded-[2.5rem] my-10 relative overflow-hidden">
+    <div class="absolute top-0 right-0 p-10 opacity-10 font-black text-9xl tracking-tighter select-none">
+        W.
+    </div>
+    
+    <div class="max-w-xl relative z-10">
+      <h2 class="text-4xl md:text-6xl font-black tracking-tighter leading-[0.9] mb-10 uppercase italic">
+        One right item is much more valuable than ten wrong items.
+      </h2>
+      <a href="/about" class="inline-flex items-center gap-4 text-xs font-black uppercase tracking-widest hover:text-gray-400 transition-all group">
+        <span class="border-b-2 border-white group-hover:border-gray-400 pb-1 text-white group-hover:text-gray-400">The Philosophy</span>
+        <span class="text-xl">→</span>
+      </a>
+    </div>
+  </section>
+</MainLayout>
