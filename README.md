@@ -1,44 +1,22 @@
-# Astro Starter Kit: Minimal
+# WANBE. [Journal]
+> "Value, not stuff." — A minimalist living movement curated from Bali.
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Wanbe adalah jurnal digital yang fokus pada kurasi desain interior, kesehatan, dan filosofi *slow living*. Dibangun dengan prinsip estetika tinggi dan performa tanpa kompromi.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 🛠 Tech Stack
+- **Framework:** [Astro](https://astro.build/) (Static Site Generation)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Content:** [Obsidian](https://obsidian.md/) (Markdown-based workflow)
+- **Deployment:** [Cloudflare Pages](https://pages.cloudflare.com/)
 
-## 🚀 Project Structure
+## ⚡ Key Features
+- **Ultra-Minimalist Navigation:** Single-link header untuk fokus konversi.
+- **Editorial Layout:** Asymmetrical grid untuk pengalaman membaca ala majalah premium.
+- **Zero-JS Foundation:** Performa maksimal untuk skor SEO dan kecepatan akses.
+- **Direct Obsidian Sync:** Workflow nulis langsung dari Obsidian ke production.
 
-Inside of your Astro project, you'll see the following folders and files:
+## 🚀 Getting Started
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
-"# wanbe" 
+1. **Clone the repository**
+   ```bash
+   git clone [https://github.com/k0k41n4/wanbe.git](https://github.com/k0k41n4/wanbe.git)
