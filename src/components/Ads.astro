@@ -1,0 +1,17 @@
+---
+// src/components/Ads.astro
+const { slot = "horizontal" } = Astro.props;
+---
+
+<div class="ad-wrapper my-12 flex flex-col items-center justify-center overflow-hidden">
+    <span class="text-[9px] uppercase tracking-[0.3em] text-gray-300 mb-4 font-bold">
+        Marketplace Insight
+    </span>
+
+    <div class="w-full max-w-4xl min-h-[90px] bg-[#fdfdfd] border border-dashed border-gray-100 rounded-xl flex items-center justify-center relative">
+        <span class="text-[10px] italic text-gray-200 uppercase tracking-widest">
+            {slot === 'horizontal' ? 'Landscape Banner Area' : 'Content Native Unit'}
+        </span>
+
+        </div>
+</div>

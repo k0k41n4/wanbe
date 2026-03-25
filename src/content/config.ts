@@ -5,7 +5,8 @@ const blog = defineCollection({
   schema: z.object({
     title: z.string(),
     date: z.date(),
-    category: z.enum(['living', 'healthy', 'tech']), // Kategori yang kita bahas tadi
+    // Ganti ke array string biar bisa input 2-3 tag sekaligus
+    tags: z.array(z.string()).default(['minimalist']), 
     author: z.string().default('Wanbe Team'),
     image: z.string().optional(),
     description: z.string().max(160),

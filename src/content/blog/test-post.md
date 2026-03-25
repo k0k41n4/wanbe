@@ -1,10 +1,10 @@
 ---
 title: "Wanbe's Minimalist Philosophy: Why Less is More?"
 date: 2026-03-09
-category: "living"
-author: "Wanbe"
+tags: ["living", "essentials"]
+author: "Maheswara"
 image: "https://hips.hearstapps.com/hmg-prod/images/ginger-maine-coon-kitten-running-on-lawn-in-royalty-free-image-1719608142.jpg?crop=1xw:0.84415xh;0,0.185xh"
-description: "Explaining Wanbe's vision of a healthy and efficient home aesthetic."
+description: "Discover how the Wanbe vision redefines healthy and efficient home aesthetics for a more meaningful living space."
 ---
 
 ## Welcome to Wanbe

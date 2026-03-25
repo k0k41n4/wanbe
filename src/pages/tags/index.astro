@@ -1,0 +1,49 @@
+---
+// Sesuaikan path ini dengan letak file MainLayout.astro lo
+import MainLayout from '../../layouts/MainLayout.astro'; 
+import { getCollection } from 'astro:content';
+
+const definedTags = [
+  { name: 'Essentials', slug: 'essentials', desc: 'The non-negotiables for a refined life.' },
+  { name: 'Spaces', slug: 'spaces', desc: 'Interior inspiration and spatial aesthetics.' },
+  { name: 'Wardrobe', slug: 'wardrobe', desc: 'Sustainable style and essential garments.' },
+  { name: 'Living', slug: 'living', desc: 'Mindset, habits, and the art of being.' },
+  { name: 'Picks', slug: 'picks', desc: 'Weekly curations and editor’s choice.' }
+];
+
+const title = "Topics — Wanbe";
+---
+
+<MainLayout title={title}>
+  <main class="container mx-auto px-6 max-w-4xl">
+    <header class="mb-20 border-l-4 border-black pl-6">
+      <h1 class="text-5xl font-black tracking-tighter uppercase mb-2 text-black">
+        Curated <span class="text-gray-300">Topics</span>
+      </h1>
+      <p class="text-gray-500 font-serif italic text-lg">
+        Focused categories for a high-value lifestyle.
+      </p>
+    </header>
+
+    <div class="grid grid-cols-1 gap-6">
+      {definedTags.map((tag) => (
+        <a 
+          href={`/tags/${tag.slug}`} 
+          class="group flex flex-col md:flex-row md:items-center justify-between border-b border-gray-100 pb-8 hover:border-black transition-all duration-500"
+        >
+          <div class="flex flex-col">
+            <h2 class="text-2xl font-black tracking-widest uppercase group-hover:text-gray-400 transition-colors">
+              {tag.name}
+            </h2>
+            <p class="text-sm text-gray-400 font-serif italic mt-1 group-hover:text-black transition-colors">
+              {tag.desc}
+            </p>
+          </div>
+          <span class="text-2xl font-light text-gray-200 group-hover:text-black group-hover:translate-x-4 transition-all duration-500 mt-4 md:mt-0">
+            VIEW COLLECTION →
+          </span>
+        </a>
+      ))}
+    </div>
+  </main>
+</MainLayout>
