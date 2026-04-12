@@ -21,7 +21,7 @@ const otherPosts = sortedPosts.slice(1);
   {featuredPost && (
     <section class="mb-24 group">
       <a href={`/blog/${featuredPost.slug}`} class="grid md:grid-cols-2 gap-10 items-center">
-        <div class="aspect-[16/10] bg-neutral-100 overflow-hidden relative">
+        <div class="aspect-16/10 bg-neutral-100 overflow-hidden relative">
              {featuredPost.data.image ? (
                 <img 
                     src={featuredPost.data.image} 
@@ -37,7 +37,7 @@ const otherPosts = sortedPosts.slice(1);
         
         <div class="space-y-4">
           <span class="text-[10px] uppercase tracking-widest font-black text-gray-400">
-            Featured — {featuredPost.data.category}
+            Featured — {featuredPost.data.tags}
           </span>
           <h2 class="text-4xl md:text-5xl font-black tracking-tighter leading-[1.1] group-hover:text-gray-500 transition-colors">
             {featuredPost.data.title}
@@ -76,7 +76,7 @@ const otherPosts = sortedPosts.slice(1);
           </div>
           <div class="space-y-3">
             <span class="text-[10px] uppercase tracking-widest font-black text-gray-400">
-              {post.data.category} — {post.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+              {post.data.tags} — {post.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
             </span>
             <h3 class="text-2xl font-bold tracking-tighter leading-tight group-hover:text-gray-500 transition-colors">
               {post.data.title}
