@@ -1,0 +1,145 @@
+---
+// [slug].astro
+import { getCollection, render } from "astro:content";
+import { Image } from "astro:assets";
+import Layout from "../layouts/Layout.astro";
+
+import NativeAd from "../components/ads/NativeAd.astro";
+import StickyBannerAd from "../components/ads/StickyBannerAd.astro";
+import RectangleAd from "../components/ads/RectangleAd.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+
+  return posts.map((post) => {
+    // Filter out the current post being read
+    const otherPosts = posts.filter((p) => p.id !== post.id);
+
+    // Shuffle the remaining posts
+    const shuffledPosts = otherPosts.sort(() => Math.random() - 0.5);
+
+    // Pick 3 random posts for the bottom card list
+    const nextPosts = shuffledPosts.slice(0, 3);
+
+    return {
+      params: { slug: post.id },
+      props: {
+        post,
+        nextPosts,
+      },
+    };
+  });
+}
+
+const { post, nextPosts } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Layout title={post.data.title} description={post.data.description}>
+  <main class="min-h-screen flex flex-col justify-between bg-[#0d0d0d] text-neutral-200">
+    
+    {/* 1. Main Article */}
+    <article class="max-w-2xl mx-auto px-6 pt-16 pb-20 w-full">
+      <header class="mb-12 text-center">
+        {/* Date Meta & Badge */}
+        <div class="flex items-center justify-center gap-2 mb-4">
+          <time class="text-xs text-rose-400 font-mono tracking-widest uppercase">
+            {
+              post.data.pubDate.toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })
+            }
+          </time>
+        </div>
+
+        {/* Article Title */}
+        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-neutral-100 leading-[1.15] mb-8">
+          {post.data.title}
+        </h1>
+
+        {/* Main Hero Image */}
+        {
+          post.data.heroImage && (
+            <div class="rounded-2xl overflow-hidden border border-neutral-800/80 shadow-2xl shadow-rose-950/10 mb-10 aspect-[16/9] bg-neutral-900">
+              <Image
+                src={post.data.heroImage}
+                alt={post.data.title}
+                class="w-full h-full object-cover"
+              />
+            </div>
+          )
+        }
+      </header>
+
+      {/* Article Content with Optimized Typography */}
+      <div 
+        class="prose prose-invert prose-rose max-w-none text-neutral-300 text-base sm:text-lg leading-relaxed font-light
+          prose-headings:text-neutral-100 prose-headings:font-bold prose-headings:tracking-tight
+          prose-h2:text-xl sm:prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
+          prose-p:leading-8 prose-p:mb-6
+          prose-a:text-rose-400 prose-a:no-underline hover:prose-a:underline
+          prose-blockquote:border-l-rose-500 prose-blockquote:bg-neutral-900/40 prose-blockquote:py-2 prose-blockquote:px-5 prose-blockquote:rounded-r-xl prose-blockquote:text-neutral-400 prose-blockquote:italic
+          prose-code:text-rose-300 prose-code:bg-neutral-900 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
+          prose-img:rounded-xl prose-img:border prose-img:border-neutral-800"
+      >
+        <Content />
+      </div>
+
+      <RectangleAd />
+
+      <NativeAd />
+    </article>
+
+    {/* 2. Next Articles Recommendation Card List */}
+    <section class="w-full bg-neutral-950/60 border-t border-neutral-900 py-16 px-6">
+      <div class="max-w-2xl mx-auto">
+        <div class="flex items-center justify-between mb-8">
+          <h2 class="text-lg font-bold text-neutral-100 tracking-tight">
+            Continue Reading
+          </h2>
+          <span class="text-xs text-neutral-500 font-mono">Random</span>
+        </div>
+
+        <div class="flex flex-col gap-4">
+          {nextPosts.map((nextP) => (
+            <a 
+              href={`/${nextP.id}`} 
+              class="group flex items-center gap-4 p-3 bg-neutral-900/40 border border-neutral-800/80 hover:border-neutral-700 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md hover:shadow-rose-950/20 hover:-translate-y-0.5 overflow-hidden"
+            >
+              {nextP.data.heroImage ? (
+                <div class="w-20 h-20 sm:w-24 sm:h-24 shrink-0 rounded-lg overflow-hidden bg-neutral-950 border border-neutral-800/60">
+                  <Image 
+                    src={nextP.data.heroImage} 
+                    alt={nextP.data.title}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+              ) : (
+                <div class="w-20 h-20 shrink-0 rounded-lg bg-neutral-900 border border-neutral-800 flex items-center justify-center text-[10px] text-neutral-600 font-mono">
+                  [No Image]
+                </div>
+              )}
+
+              <div class="flex-1 min-w-0 pr-2">
+                <time class="text-[10px] text-neutral-500 font-mono tracking-wider block mb-1">
+                  {nextP.data.pubDate.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
+                </time>
+                <h3 class="text-sm sm:text-base font-semibold text-neutral-200 group-hover:text-rose-400 transition-colors line-clamp-2 leading-snug mb-1">
+                  {nextP.data.title}
+                </h3>
+                <p class="text-xs text-neutral-400 line-clamp-1 font-light">
+                  {nextP.data.description}
+                </p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <StickyBannerAd />
+
+  </main>
+</Layout>

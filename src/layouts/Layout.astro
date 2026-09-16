@@ -1,0 +1,51 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Catatan minimalis dan digital assets." } = Astro.props;
+---
+
+<!doctype html>
+<html lang="id" class="bg-[#0d0d0d] text-neutral-200">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/png" href="/wanbe.png" />
+
+    {/* OpenGraph Meta */}
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+  </head>
+  <body class="bg-[#0d0d0d] font-sans antialiased selection:bg-rose-500 selection:text-white min-h-screen flex flex-col justify-between">
+    
+    {/* Header Minimalis: Tipis & Tidak Mengganggu Focus Baca */}
+    <header class="w-full border-b border-neutral-900/80 px-6 py-4">
+      <div class="max-w-4xl mx-auto flex items-center justify-between">
+        <a href="/" class="text-2xl font-mono font-bold tracking-tight text-neutral-100 hover:text-rose-400 transition-colors">
+          Wanbe<span class="text-rose-500">.</span>
+        </a>
+        <nav class="text-xs text-neutral-400 font-mono">
+          <a href="/" class="hover:text-neutral-100 transition-colors">Artikel</a>
+        </nav>
+      </div>
+    </header>
+
+    {/* Konten Utama Halaman */}
+    <div class="flex-grow">
+      <slot />
+    </div>
+
+    {/* Footer Universal */}
+    <footer class="py-12 text-center text-xs text-neutral-600 border-t border-neutral-900/50">
+      <p>&copy; {new Date().getFullYear()} Wanbe. All rights reserved.</p>
+    </footer>
+
+  </body>
+</html>
